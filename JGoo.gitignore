@@ -1,0 +1,14 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# GWT Generated Files #
+gwt-unitCache/
+war/jgoo/
+war/WEB-INF/deploy/
+
+# AppEngine Generated Files #
+/war/WEB-INF/appengine-generated/
