@@ -5,15 +5,15 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 import com.google.gwt.place.shared.Prefix;
 
 public class QueryCrudObjectPlace extends Place{
-	private String type;
+	private String canonicalName;
     
-	public QueryCrudObjectPlace(String type) {
-       this.type=type;
+	public QueryCrudObjectPlace(String canonicalName) {
+       this.canonicalName=canonicalName;
     }
 
-    public String getObjectType()
+    public String getObjectCanonicalName()
     {
-    	return type;
+    	return canonicalName;
     }
 	
     @Prefix("crud-query")
@@ -23,7 +23,7 @@ public class QueryCrudObjectPlace extends Place{
     	
 	        @Override
 	        public String getToken(QueryCrudObjectPlace place) {
-	            return place.getObjectType();
+	            return place.getObjectCanonicalName();
 	        }
 
 	        @Override

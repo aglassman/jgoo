@@ -21,7 +21,7 @@ public class CrudActivityMapper implements ActivityMapper{
 		if(place instanceof NewCrudPlace)
 			return new NewCrudActivity(((NewCrudPlace)place).getObjectType());
 		if(place instanceof QueryCrudObjectPlace)
-			return new QueryCrudObjectActivity(((QueryCrudObjectPlace)place).getObjectType());
+			return new QueryCrudObjectActivity(((QueryCrudObjectPlace)place).getObjectCanonicalName());
 		return null;
 	}
 

@@ -7,7 +7,7 @@ public class TokenizerTest {
 		@Test
 		public void testSplit()
 		{
-			String token = "tiny:agxnZXRzb21lbHVuY2hyCgsSBFRpbnkYLQw";
+			String token = "com.jgoo.shared.model.Tiny:agxnZXRzb21lbHVuY2hyCgsSBFRpbnkYLQw";
 			String[] tokens = token.split(":");
 			
 			for(String s: tokens)

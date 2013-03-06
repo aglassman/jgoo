@@ -1,7 +1,6 @@
 package com.jgoo.server.crud.rpc;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.jdo.JDOHelper;
@@ -13,15 +12,11 @@ import javax.jdo.Query;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.jgoo.client.crud.CrudObject;
 import com.jgoo.client.crud.rpc.CrudRpcService;
 import com.jgoo.client.crud.service.Message;
 import com.jgoo.client.crud.service.Message.MessageType;
-import com.jgoo.shared.model.Restaurant;
-import com.jgoo.shared.model.Tiny;
 
 public class CrudServiceImpl extends RemoteServiceServlet implements CrudRpcService{
 
@@ -42,7 +37,7 @@ public class CrudServiceImpl extends RemoteServiceServlet implements CrudRpcServ
 		 finally {
 			pm.close();
 		}
-		Message m = new Message(Message.MessageType.SUCCESS,"Tiny successfully saved.");
+		Message m = new Message(Message.MessageType.SUCCESS, object.getFriendlyName() + " successfully created.");
 		m.key = object.getId();
 		return m;
 	}
@@ -100,19 +95,19 @@ public class CrudServiceImpl extends RemoteServiceServlet implements CrudRpcServ
 		
 		if(key == null || key.equals(""))
 		{
-			return new Message(MessageType.FAILURE,"Cannot delete object, no id.");
+			return new Message(MessageType.FAILURE,"Cannot delete " + className + " , no id.");
 		}
 		
 		PersistenceManager pm = pmf.getPersistenceManager();
 		
 		try{
 			pm.deletePersistent(pm.getObjectById(Class.forName(className), key));
-			return new Message(MessageType.SUCCESS,"Object successfully deleted.");
+			return new Message(MessageType.SUCCESS,className + "  successfully deleted.");
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			return new Message(MessageType.FAILURE,"Failed to delete object: " +e.getMessage());
+			return new Message(MessageType.FAILURE,"Failed to delete " + className + " : " +e.getMessage());
 		}
 		 finally {
 			pm.close();
@@ -134,34 +129,6 @@ public class CrudServiceImpl extends RemoteServiceServlet implements CrudRpcServ
 			pm.close();
 		}
 		return null;
-//		ArrayList<CrudObject> results = new ArrayList<CrudObject>();
-//		String[] spit = className.split("\\.");
-//		
-//		com.google.appengine.api.datastore.Query query = new com.google.appengine.api.datastore.Query(spit[spit.length-1]);
-//		com.google.appengine.api.datastore.PreparedQuery pq = datastore.prepare(query);
-//		for(Entity result :pq.asIterable())
-//		{
-//			if(spit[spit.length-1].equalsIgnoreCase("tiny"))
-//			{
-//				Tiny t = new Tiny();
-//				t.setId(KeyFactory.keyToString(result.getKey()));
-//				t.setName((String)result.getProperty("name"));
-//				t.setDescription((String)result.getProperty("description"));
-//				t.setToday((Date)result.getProperty("today"));
-//				results.add(t);
-//			}
-//			else if(spit[spit.length-1].equalsIgnoreCase("restaurant"))
-//			{
-//				Restaurant r = new Restaurant();
-//				r.setId(KeyFactory.keyToString(result.getKey()));
-//				r.setName((String)result.getProperty("name"));
-//				r.setCity((String)result.getProperty("city"));
-//				r.setFoodType((String)result.getProperty("foodType"));
-//				results.add(r);
-//			}
-//		}
-//		
-//		return results;
 	}
 
 }

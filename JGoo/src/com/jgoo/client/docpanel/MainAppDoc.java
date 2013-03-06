@@ -42,7 +42,7 @@ public class MainAppDoc extends Composite{
 			{
 				buttonPanel.add(ad.widget);
 			}
-			stackPanel.add(buttonPanel,locationActivities.getObjectType());
+			stackPanel.add(buttonPanel,locationActivities.getObjectFriendlyName());
 		}
 		
 //		form1. addClickHandler(new ClickHandler() {

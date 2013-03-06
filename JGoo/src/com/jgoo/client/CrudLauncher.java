@@ -18,11 +18,13 @@ import com.jgoo.client.appnav.place.ClearPanelPlace;
 import com.jgoo.client.crud.Crud;
 import com.jgoo.client.crud.CrudFactory;
 import com.jgoo.client.crud.nav.CrudLocationActivities;
+import com.jgoo.client.crud.rpc.CrudRpcService;
+import com.jgoo.client.crud.rpc.CrudRpcServiceAsync;
 import com.jgoo.client.docpanel.MainAppDoc;
 import com.jgoo.client.domain.restaurant.RestaurantCrudForm;
-import com.jgoo.client.domain.restaurant.RestaurantService;
 import com.jgoo.client.domain.tiny.TinyCrudForm;
-import com.jgoo.client.domain.tiny.TinyService;
+import com.jgoo.shared.model.Restaurant;
+import com.jgoo.shared.model.Tiny;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
@@ -44,14 +46,16 @@ public class CrudLauncher implements EntryPoint {
 		PlaceHistoryMapper appPlaceHistoryMapper = GWT.create(AppPlaceHistoryMapper.class);
 		PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(appPlaceHistoryMapper);
 		
-		CrudFactory.init(clientFactory.getEventBus());
+		CrudRpcServiceAsync crudRpcService = GWT.create(CrudRpcService.class);
+		
+		CrudFactory.init(clientFactory.getEventBus(),crudRpcService);
 		CrudFactory cf = CrudFactory.get();
-		cf.register("tiny",new TinyService(), new TinyCrudForm(TinyCrudForm.Tiny1.class));
-		cf.register("restaurant",new RestaurantService(), new RestaurantCrudForm(RestaurantCrudForm.Restuaruant1.class));
+		cf.register(new Tiny(), new TinyCrudForm(TinyCrudForm.Tiny1.class));
+		cf.register(new Restaurant(), new RestaurantCrudForm(RestaurantCrudForm.Restuaruant1.class));
 		
 		ArrayList<CrudLocationActivities> activities = new ArrayList<CrudLocationActivities>();
-		activities.add(new CrudLocationActivities("tiny"));
-		activities.add(new CrudLocationActivities("restaurant"));
+		activities.add(new CrudLocationActivities(new Tiny()));
+		activities.add(new CrudLocationActivities(new Restaurant()));
 		
 		MainAppDoc mainAppDoc = new MainAppDoc(activities);
 		

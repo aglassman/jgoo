@@ -10,4 +10,5 @@ public interface CrudForm {
 	public abstract CrudObject getObjectFromForm();
 	public abstract Composite getComposite();
 	public abstract void setEnabled(boolean b);
+	public abstract String getCanonicalName();
 }

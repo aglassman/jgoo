@@ -99,6 +99,13 @@ public class TinyCrudForm extends Composite implements CrudForm{
 		descriptionVal.setEnabled(b);
 		todayVal.setEnabled(b);
 	}
+
+
+
+	@Override
+	public String getCanonicalName() {
+		return Tiny.canonicalName;
+	}
 	
 	
 }

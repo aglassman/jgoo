@@ -7,13 +7,15 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 import com.jgoo.client.CrudLauncher;
+import com.jgoo.client.crud.Crud;
+import com.jgoo.client.crud.CrudObject;
 import com.jgoo.client.crud.nav.activity.QueryCrudObjectActivity;
 import com.jgoo.client.crud.nav.place.NewCrudPlace;
 import com.jgoo.client.crud.nav.place.QueryCrudObjectPlace;
 
 public class CrudLocationActivities {
 	
-	private String objectType;
+	private CrudObject crudObject;
 	
 	public  class ActivityDescription
 	{
@@ -26,14 +28,19 @@ public class CrudLocationActivities {
 		}
 	}
 	
-	public String getObjectType()
+	public String getObjectCanonicalName()
 	{
-		return objectType;
+		return crudObject.getCanonicalName();
 	}
 	
-	public CrudLocationActivities(String objectType)
+	public String getObjectFriendlyName()
 	{
-		this.objectType = objectType; 
+		return crudObject.getFriendlyName();
+	}
+	
+	public CrudLocationActivities(CrudObject curdObject)
+	{
+		this.crudObject = curdObject; 
 	}
 	
 	public ArrayList<ActivityDescription> getActivities()
@@ -44,7 +51,7 @@ public class CrudLocationActivities {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				CrudLauncher.getClientFactory().getPlaceController().goTo(new NewCrudPlace(objectType));
+				CrudLauncher.getClientFactory().getPlaceController().goTo(new NewCrudPlace(crudObject.getCanonicalName()));
 			}
 		});
 		
@@ -56,7 +63,7 @@ public class CrudLocationActivities {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				CrudLauncher.getClientFactory().getPlaceController().goTo(new QueryCrudObjectPlace(objectType));
+				CrudLauncher.getClientFactory().getPlaceController().goTo(new QueryCrudObjectPlace(crudObject.getCanonicalName()));
 			}
 		});
 		

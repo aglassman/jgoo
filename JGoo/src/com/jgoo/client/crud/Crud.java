@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.jgoo.client.CrudLauncher;
 import com.jgoo.client.crud.nav.place.EditCrudObjectPlace;
 import com.jgoo.client.crud.nav.place.NewCrudPlace;
-import com.jgoo.client.crud.service.CrudService;
+import com.jgoo.client.crud.rpc.CrudRpcServiceAsync;
 import com.jgoo.client.crud.service.Message;
 import com.jgoo.client.crud.service.Message.MessageType;
 
@@ -32,19 +32,19 @@ public class Crud extends Composite{
 	@UiField Button update;
 	@UiField Button delete;
 	
-	private final CrudService crudService;
+	private final CrudRpcServiceAsync crudRpcService;
 	private final CrudForm crudForm;
-	private final String objectType;
+	private final CrudObject crudObject;
 	
 	
-	public Crud(String crudType,final CrudService crudService, final CrudForm crudForm)
+	public Crud(CrudObject crudObject,final CrudRpcServiceAsync crudRpcService, final CrudForm crudForm)
 	{
-		this.objectType = crudType;
-		this.crudService = crudService;
+		this.crudObject = crudObject;
+		this.crudRpcService = crudRpcService;
 		this.crudForm = crudForm;
 		
 		initWidget(uiBinder.createAndBindUi(this));
-		title.setText(crudType + "CRUD");
+		title.setText(crudObject.getFriendlyName() + " CRUD");
 		fields.add(crudForm.getComposite());
 		
 	}
@@ -87,13 +87,13 @@ public class Crud extends Composite{
 	{
 		setEnabled(false);
 		final CrudObject object = crudForm.getObjectFromForm();
-		crudService.create(object,new AsyncCallback<Message>() {
+		crudRpcService.createObject(object,new AsyncCallback<Message>() {
 			
 			@Override
 			public void onSuccess(Message result) {
 				setMessage(result);
 				if(result.key != null)
-					CrudLauncher.getClientFactory().getPlaceController().goTo(new EditCrudObjectPlace(result.key, objectType));
+					CrudLauncher.getClientFactory().getPlaceController().goTo(new EditCrudObjectPlace(result.key, crudObject.getCanonicalName()));
 			}
 			
 			@Override
@@ -109,7 +109,7 @@ public class Crud extends Composite{
 	{
 		setEnabled(false);
 		CrudObject object = crudForm.getObjectFromForm();
-		crudService.read(object.getId(),new AsyncCallback<CrudObject>() {
+		crudRpcService.readObject(object.getId(),object.getCanonicalName(),new AsyncCallback<CrudObject>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -137,7 +137,7 @@ public class Crud extends Composite{
 	{
 		setEnabled(false);
 		CrudObject object = crudForm.getObjectFromForm();
-		crudService.update(object,new AsyncCallback<CrudObject>() {
+		crudRpcService.updateObject(object,new AsyncCallback<CrudObject>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -167,14 +167,14 @@ public class Crud extends Composite{
 	{
 		final CrudObject object = crudForm.getObjectFromForm();
 		setEnabled(false);
-		crudService.delete(object.getId(), new AsyncCallback<Message>() {
+		crudRpcService.deleteObject(object.getId(),object.getCanonicalName(), new AsyncCallback<Message>() {
 			
 			@Override
 			public void onSuccess(Message result) {
 				crudForm.clearForm();
 				setMessage(result);
 				setEnabled(true);
-				CrudLauncher.getClientFactory().getPlaceController().goTo(new NewCrudPlace(objectType));
+				CrudLauncher.getClientFactory().getPlaceController().goTo(new NewCrudPlace(crudObject.getCanonicalName()));
 			}
 			
 			@Override
@@ -188,7 +188,7 @@ public class Crud extends Composite{
 	public void load(String key)
 	{
 		setEnabled(false);
-		crudService.read(key, new AsyncCallback<CrudObject>(){
+		crudRpcService.readObject(key,crudForm.getCanonicalName(), new AsyncCallback<CrudObject>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -218,7 +218,7 @@ public class Crud extends Composite{
 	
 	public String getCrudType()
 	{
-		return objectType;
+		return crudObject.getCanonicalName();
 	}
 	
 	public void reset()

@@ -101,6 +101,13 @@ public class RestaurantCrudForm extends Composite implements CrudForm{
 		descriptionVal.setEnabled(b);
 		todayVal.setEnabled(b);
 	}
+
+
+
+	@Override
+	public String getCanonicalName() {
+		return Restaurant.canonicalName;
+	}
 	
 	
 }

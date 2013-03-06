@@ -16,7 +16,7 @@ import com.jgoo.client.CrudLauncher;
 import com.jgoo.client.crud.CrudForm;
 import com.jgoo.client.crud.CrudObject;
 import com.jgoo.client.crud.nav.place.EditCrudObjectPlace;
-import com.jgoo.client.crud.service.CrudService;
+import com.jgoo.client.crud.rpc.CrudRpcServiceAsync;
 
 public class CrudQueryResult extends Composite{
 	interface MyUiBinder extends UiBinder<Widget,CrudQueryResult>{}
@@ -24,18 +24,14 @@ public class CrudQueryResult extends Composite{
 	
 	@UiField VerticalPanel resultPanel;
 	
-	private final CrudService crudService;
-	private final String objectType;
 	
 	
-	public CrudQueryResult(String crudType,final CrudService crudService)
+	public CrudQueryResult(final String canonicalName,final CrudRpcServiceAsync crudService)
 	{
-		this.objectType = crudType;
-		this.crudService = crudService;
 		
 		initWidget(uiBinder.createAndBindUi(this));
 		
-		crudService.getAll(new AsyncCallback<ArrayList<CrudObject>>(){
+		crudService.getAll(canonicalName,new AsyncCallback<ArrayList<CrudObject>>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -45,6 +41,12 @@ public class CrudQueryResult extends Composite{
 
 			@Override
 			public void onSuccess(ArrayList<CrudObject> result) {
+				if(result == null)
+				{
+					Label l = new Label("No objects found.");
+					resultPanel.add(l);
+					return;
+				}
 				for(final CrudObject c: result)
 				{
 					Label l = new Label(c.toString());
@@ -52,7 +54,7 @@ public class CrudQueryResult extends Composite{
 						
 						@Override
 						public void onClick(ClickEvent event) {
-							CrudLauncher.getClientFactory().getPlaceController().goTo(new EditCrudObjectPlace(c.getId(), objectType));
+							CrudLauncher.getClientFactory().getPlaceController().goTo(new EditCrudObjectPlace(c.getId(), canonicalName));
 						}
 					});
 					resultPanel.add(l);

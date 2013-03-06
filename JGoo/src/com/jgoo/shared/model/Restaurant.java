@@ -14,8 +14,8 @@ import com.jgoo.client.crud.CrudObject;
 @PersistenceCapable
 public class Restaurant implements CrudObject, Serializable{
 	
-	private static final String className = "com.jgoo.shared.model.Restaurant";
-	
+	public static final String canonicalName = "com.jgoo.shared.model.Restaurant";
+	public static final String friendlyName = "Restaurant";
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "true")
@@ -127,8 +127,14 @@ public class Restaurant implements CrudObject, Serializable{
 				+ ", orderOnline=" + orderOnline + ", foodType=" + foodType
 				+ "]";
 	}
-	public static String getCanonicalName()
+	
+	@Override
+	public String getCanonicalName()
 	{
-		return className;
+		return canonicalName;
+	}
+	@Override
+	public String getFriendlyName() {
+		return friendlyName;
 	}
 }

@@ -15,8 +15,8 @@ import com.jgoo.client.crud.CrudObject;
 public class Tiny implements CrudObject, Serializable{
 	
 	
-	private static final String className = "com.jgoo.shared.model.Tiny";
-	
+	public static final String canonicalName = "com.jgoo.shared.model.Tiny";
+	public static final String friendlyName = "Tiny";
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	@Extension(vendorName = "datanucleus", key = "gae.encoded-pk", value = "false")
@@ -59,9 +59,14 @@ public class Tiny implements CrudObject, Serializable{
 				+ description + ", today=" + today + "]";
 	}
 	
-	public static String getCanonicalName()
+	public String getCanonicalName()
 	{
-		return className;
+		return canonicalName;
+	}
+
+	@Override
+	public String getFriendlyName() {
+		return friendlyName;
 	}
 	
 	

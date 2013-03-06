@@ -4,36 +4,32 @@ import java.util.HashMap;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;
-import com.google.gwt.core.shared.GWT;
-import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.web.bindery.event.shared.EventBus;
 import com.jgoo.client.crud.nav.activity.CrudActivityMapper;
 import com.jgoo.client.crud.query.CrudQueryResult;
-import com.jgoo.client.crud.service.CrudService;
-import com.jgoo.client.domain.tiny.TinyCrudForm;
-import com.jgoo.client.domain.tiny.TinyService;
+import com.jgoo.client.crud.rpc.CrudRpcServiceAsync;
 
 
 public class CrudFactory {
 	
-	private final HashMap<String,CrudService> serviceMap;
+	private final CrudRpcServiceAsync crudRpcService;
 	private final HashMap<String,Crud> crudMap;
 	private final ActivityManager activityManager;
 	
 	private static CrudFactory singleton;
 	
-	private CrudFactory(EventBus eventBus)
+	private CrudFactory(EventBus eventBus, CrudRpcServiceAsync crudRpcService)
 	{
-		serviceMap = new HashMap<String, CrudService>();
-		crudMap = new HashMap<String,Crud>();
+		this.crudRpcService = crudRpcService;
+		this.crudMap = new HashMap<String,Crud>();
 		ActivityMapper activityMapper = new CrudActivityMapper();
 		activityManager = new ActivityManager(activityMapper, eventBus);
 	}
 	
-	public static void init(EventBus eventBus)
+	public static void init(EventBus eventBus, CrudRpcServiceAsync crudRpcService)
 	{
 		if(singleton == null)
-			singleton = new CrudFactory(eventBus);
+			singleton = new CrudFactory(eventBus,crudRpcService);
 	}
 	
 	public static CrudFactory get()
@@ -48,20 +44,14 @@ public class CrudFactory {
 	public ActivityManager getActivityManager() {
 		return activityManager;
 	}
+	
 
-	public HashMap<String, CrudService> getCrudServiceMap()
-	{
-		return serviceMap;
+	public void register(CrudObject crudObject, CrudForm crudForm) {
+		crudMap.put(crudObject.getCanonicalName(), new Crud(crudObject, crudRpcService, crudForm));
 	}
 
-	public void register(String objectType, CrudService crudService, CrudForm crudForm) {
-		crudMap.put(objectType, new Crud(objectType, crudService, crudForm));
-		serviceMap.put(objectType, crudService);
-		
-	}
-
-	public CrudQueryResult getCrudQueryResult(String objectType) {
-		return new CrudQueryResult(objectType, serviceMap.get(objectType));
+	public CrudQueryResult getCrudQueryResult(String canonicalName) {
+		return new CrudQueryResult(canonicalName,crudRpcService);
 	}
 	
 }
