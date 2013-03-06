@@ -13,7 +13,7 @@
 
 	<!-- Default page to serve -->
 	<welcome-file-list>
-		<welcome-file>Googlecrud.html</welcome-file>
+		<welcome-file>jgoo.html</welcome-file>
 	</welcome-file-list>
 
 	<servlet>
