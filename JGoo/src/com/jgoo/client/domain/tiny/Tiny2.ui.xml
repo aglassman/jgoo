@@ -1,0 +1,19 @@
+<!-- Tiny2.ui.xml -->
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:g='urn:import:com.google.gwt.user.client.ui'
+    xmlns:crud='urn:import:com.jgoo.client.crud'>
+     <g:HorizontalPanel styleName='crudPanel'>
+     	<g:HorizontalPanel styleName='spacedOut'>
+     		<g:Label ui:field='id'></g:Label>
+     	</g:HorizontalPanel>
+     	<g:HorizontalPanel styleName='spacedOut'>
+	  		<g:Label>Name</g:Label><g:TextBox ui:field="nameVal"></g:TextBox>
+	  	</g:HorizontalPanel>
+     	<g:HorizontalPanel styleName='spacedOut'>
+	  		<g:Label>Description</g:Label><g:TextBox ui:field="descriptionVal"></g:TextBox>
+	  	</g:HorizontalPanel>
+     	<g:HorizontalPanel styleName='spacedOut'>
+	  		<g:Label>Today</g:Label><g:TextBox ui:field="todayVal"></g:TextBox>
+	  	</g:HorizontalPanel>	
+	  </g:HorizontalPanel>
+</ui:UiBinder>

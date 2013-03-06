@@ -1,0 +1,28 @@
+<!-- MainAppDoc.ui.xml -->
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+	<g:DockLayoutPanel ui:field='docLayoutPanel' unit='PCT'>
+		<g:north size="10" >
+			<g:SimplePanel styleName="north">
+				<g:Label>CRUD Test Doc</g:Label>
+			</g:SimplePanel>
+		</g:north>
+		<g:west size="20">
+			<g:SimplePanel styleName="west">
+				<g:StackPanel  ui:field='stackPanel' >
+					<g:VerticalPanel  g:StackPanel-text="Panel Functions">
+						<g:Button ui:field='clear'>Clear Panel</g:Button>
+					<g:Button ui:field='testComponent'>Test Component</g:Button>
+					</g:VerticalPanel>
+					
+				</g:StackPanel>
+			</g:SimplePanel>
+		</g:west>
+		<g:center size="50">
+			<g:SimplePanel styleName="center" ui:field='centerPanel'>
+			</g:SimplePanel>
+		</g:center>
+		
+	
+	</g:DockLayoutPanel>
+</ui:UiBinder>

@@ -1,0 +1,144 @@
+/** Add css rules here for your application. */
+
+
+/** Example rules used by the template application (remove for your app) */
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #777777;
+  margin: 40px 0px 70px;
+  text-align: center;
+}
+
+.sendButton {
+  display: block;
+  font-size: 16pt;
+}
+
+/** Most GWT widgets already have a style name defined */
+.gwt-DialogBox {
+  width: 400px;
+}
+
+.dialogVPanel {
+  margin: 5px;
+}
+
+.serverResponseLabelError {
+  color: red;
+}
+
+/** Set ids using widget.getElement().setId("idOfElement") */
+#closeButton {
+  margin: 15px 6px 6px;
+}
+.buttons-horizontal .gwt-Button
+ {
+	padding: 5px;
+}
+
+.messageRed
+{
+	background-color: red !important;
+}
+
+.messageBlue
+{
+	background-color: lightBlue !important;
+}
+
+.messageGreen
+{
+	background-color: lightGreen !important;
+}
+
+.messageYellow
+{
+	background-color: lightYellow !important;
+}
+
+
+
+.crudPanel
+{
+	display:inline-block;
+	background-color:black;
+	padding:10px;
+	border-radius:10px;
+}
+
+.crudPanel .gwt-Label
+{
+	margin:5px;
+	border-radius:5px;
+	text-align:center;
+	background-color: Skyblue;
+}
+
+.crudPanel .spacedOut, .spacedOutId
+{
+	width:100%;
+	border-radius:5px;
+	margin:2px;
+	padding:2px;
+	background-color: Skyblue;
+}
+
+.crudPanel .spacedOut .gwt-Label
+{
+	width:75px;
+	text-align:right;
+}
+
+.crudPanel .spacedOutId .gwt-Label
+{
+	text-align:left;
+}
+
+.crudPanel .gwt-TextBox
+{
+	vertical-align:middle;
+}
+
+.horizontalButtons .gwt-Button
+{
+	margin:5px;
+}
+
+.north
+{
+	
+	background-color: Skyblue;;
+}
+
+.center
+{
+	
+	background-color: lightYellow;;
+}
+
+.south
+{
+	
+	background-color: lightGreen;;
+}
+
+.west
+{
+	
+	background-color: orange;
+}
+
+.west .gwt-StackPanel
+{
+	width:100%;
+}
+
+.west .gwt-StackPanel .gwt-Button
+{
+	width:80%;
+	margin:5px;
+}
+
+
+

@@ -1,0 +1,15 @@
+<!-- Crud.ui.xml -->
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+    xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+     <g:VerticalPanel ui:field='crudPanel' styleName='crudPanel'>
+     	<g:Label ui:field="title">CRUD Form</g:Label>
+  		<g:Label ui:field="message"></g:Label>
+  		<g:SimplePanel ui:field="fields"></g:SimplePanel>
+	  	<g:HorizontalPanel styleName='horizontalButtons'>
+	  		<g:Button ui:field="create">Create</g:Button>
+	  		<g:Button ui:field="read">Read</g:Button>
+	  		<g:Button ui:field="update">Update</g:Button>
+	  		<g:Button ui:field="delete">Delete</g:Button>
+	  	</g:HorizontalPanel>
+	  </g:VerticalPanel>
+</ui:UiBinder>
